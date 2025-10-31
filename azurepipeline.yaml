@@ -1,29 +1,72 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
+- main   # or your branch name
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  MAVEN_VERSION: '3.9.11'
+  DOCKER_HUB_USER: 'mayrhatte09'
+  IMAGE_NAME: 'myimage'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+stages:
+- stage: Build
+  displayName: "Build Stage"
+  jobs:
+  - job: MavenBuild
+    steps:
+    - task: GitHubCheckout@1
+      displayName: "Checkout Repository"
+
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean package'
+        mavenVersionOption: 'Default'
+      displayName: "Maven Clean Package"
+
+- stage: Docker
+  displayName: "Docker Build & Push"
+  jobs:
+  - job: DockerJob
+    steps:
+    - task: Docker@2
+      displayName: "Build Docker Image"
+      inputs:
+        command: build
+        Dockerfile: '**/Dockerfile'
+        tags: |
+          $(IMAGE_NAME):v$(Build.BuildId)
+
+    - task: Docker@2
+      displayName: "Push to Docker Hub"
+      inputs:
+        containerRegistry: 'dockerhub-service-connection'   # <-- create this in Azure DevOps
+        repository: '$(DOCKER_HUB_USER)/$(IMAGE_NAME)'
+        command: push
+        tags: |
+          v$(Build.BuildId)
+
+- stage: Deploy
+  displayName: "Deploy to Kubernetes"
+  dependsOn: Docker
+  jobs:
+  - job: K8sDeploy
+    steps:
+    - script: |
+        sed -i "s|$(DOCKER_HUB_USER)/$(IMAGE_NAME):.*|$(DOCKER_HUB_USER)/$(IMAGE_NAME):v$(Build.BuildId)|g" deployments.yml
+      displayName: "Update Deployment File"
+
+    - task: Kubernetes@1
+      displayName: "Apply Kubernetes Deployment"
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'k8s-service-connection'  # <-- create this in Azure DevOps
+        namespace: 'default'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: 'deployments.yml'
+
+    - script: |
+        kubectl expose deployment mywebdeployment --port=8080 --type=NodePort || true
+      displayName: "Expose Kubernetes Service"
