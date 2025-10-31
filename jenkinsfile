@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "Apache Maven 3.9.11"
+    }
+
+    environment {
+        DOCKER_HUB_USER = 'mayrhatte09'   
+        IMAGE_NAME = 'myimage'
+    }
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git url: 'https://github.com/Mayurhatte09/myweb.git'
+            }
+        }
+
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t ${IMAGE_NAME}:v$BUILD_NUMBER .'
+            }
+        }
+
+        stage('Docker Login & Push') {
+            steps {
+                withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'DOCKER_HUB_PASS')]) {
+                    sh """
+                      echo "${DOCKER_HUB_PASS}" | docker login -u "${DOCKER_HUB_USER}" --password-stdin
+                      docker tag ${IMAGE_NAME}:v$BUILD_NUMBER ${DOCKER_HUB_USER}/${IMAGE_NAME}:v$BUILD_NUMBER
+                      docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:v$BUILD_NUMBER
+                    """
+                }
+            }
+        }
+
+        stage('Update Deployment File') {
+            steps {
+                sh """
+                  sed -i 's|${DOCKER_HUB_USER}/${IMAGE_NAME}:.*|${DOCKER_HUB_USER}/${IMAGE_NAME}:v$BUILD_NUMBER|g' deployments.yml
+                """
+            }
+        }
+
+        stage('Kubernetes Deployment') {
+            steps {
+                sh """
+                  kubectl apply -f deployments.yml
+                  kubectl expose deployment mywebdeployment --port=8080 --type=NodePort || true
+                """
+            }
+        }
+    }
+}
