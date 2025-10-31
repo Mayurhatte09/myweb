@@ -1,0 +1,108 @@
+
+# 1. My Web App Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mywebdeployment
+  labels:
+    app: myweb
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: myweb
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      containers:
+      - name: myweb
+        image: shubham7890/myimage_2
+        ports:
+        - containerPort: 8289
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myweb-service
+spec:
+  selector:
+    app: myweb
+  ports:
+    - port: 8289
+      targetPort: 8289
+  type: NodePort
+
+# 2. Prometheus Deployment
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - name: prometheus
+        image: prom/prometheus
+        ports:
+        - containerPort: 9090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+spec:
+  selector:
+    app: prometheus
+  ports:
+    - port: 9090
+      targetPort: 9090
+  type: NodePort
+
+# 3. Grafana Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+spec:
+  selector:
+    app: grafana
+  ports:
+    - port: 3000
+      targetPort: 3000
+  type: NodePort
