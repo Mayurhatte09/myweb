@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven "Apache Maven 3.9.11"
+        maven "Apache Maven 3.8.4" 
     }
 
     environment {
@@ -45,7 +45,7 @@ pipeline {
         stage('Update Deployment File') {
             steps {
                 sh """
-                  sed -i 's|${DOCKER_HUB_USER}/${IMAGE_NAME}:.*|${DOCKER_HUB_USER}/${IMAGE_NAME}:v$BUILD_NUMBER|g' deployments.yml
+                  sed -i 's|${DOCKER_HUB_USER}/${IMAGE_NAME}:.*|${DOCKER_HUB_USER}/${IMAGE_NAME}:v$BUILD_NUMBER|g' deployments.yaml
                 """
             }
         }
@@ -53,8 +53,8 @@ pipeline {
         stage('Kubernetes Deployment') {
             steps {
                 sh """
-                  kubectl apply -f deployments.yml
-                  kubectl expose deployment mywebdeployment --port=8080 --type=NodePort || true
+                  kubectl apply -f deployments.yaml
+                  kubectl expose deployment mywebdeployment --port=8289 --type=NodePort || true
                 """
             }
         }
