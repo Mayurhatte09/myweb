@@ -20,7 +20,7 @@ spec:
       - name: myweb
         image: mayrhatte09/myimage:v
         ports:
-        - containerPort: 8289
+        - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -30,8 +30,8 @@ spec:
   selector:
     app: myweb
   ports:
-    - port: 8289
-      targetPort: 8289
+    - port: 8080
+      targetPort: 8080
   type: NodePort
 
 # 2. Prometheus Deployment
