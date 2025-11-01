@@ -54,7 +54,7 @@ pipeline {
             steps {
                 sh """
                   kubectl apply -f deployments.yaml
-                  kubectl expose deployment mywebdeployment --port=8080--type=NodePort || true
+                // kubectl expose deployment mywebdeployment --port=8080--type=NodePort || true
                 """
             }
         }
