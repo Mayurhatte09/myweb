@@ -14,7 +14,7 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 // Checkout code from Git repository 
-                git url: 'https://github.com/Mayurhatte09/myweb.git', branch: 'main'
+                git url: 'https://github.com/Mayurhatte09/myweb.git', branch: 'main' 
             }
         }
 
