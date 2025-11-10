@@ -4,6 +4,4 @@
 # But keep this file
 !.gitignore
 
-node_modules/
-dist/
-.vscode/
+
