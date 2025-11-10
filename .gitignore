@@ -1,7 +1,7 @@
-# Ignore everything
-*
-
-# But keep this file
-!.gitignore
-
+# Ignore all these files and folders
+deployments.yaml
+dockerfile
+jenkinsfile
+pom.xml
+src/
 
