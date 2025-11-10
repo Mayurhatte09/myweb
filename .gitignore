@@ -18,6 +18,13 @@ coverage/
 lib/
 out/
 
+# Ignore all files and folders
+*
+
+# Except this .gitignore file
+!.gitignore
+
+
 # Environment files
 .env
 .env.local
