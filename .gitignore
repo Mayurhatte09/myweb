@@ -1,81 +1,9 @@
-# =========================
-# Node.js / Angular / Web App Git Ignore
-# =========================
-
-# Node dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Build output
-dist/
-build/
-tmp/
-temp/
-.cache/
-coverage/
-lib/
-out/
-
-# Ignore all files and folders
+# Ignore everything
 *
 
-# Except this .gitignore file
+# But keep this file
 !.gitignore
 
-
-# Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Angular specific
-.angular/
-.angular/cache/
-.angular-build/
-
-# Logs
-logs
-*.log
-*.log.*
-
-# IDEs & Editors
+node_modules/
+dist/
 .vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# OS-specific
-.DS_Store
-Thumbs.db
-
-# Misc
-*.tgz
-*.zip
-*.tar
-*.gz
-
-# Docker
-docker-compose.override.yml
-.dockerignore
-
-# Temporary files
-*.tmp
-*.temp
-~*
-
-# Coverage testing
-coverage/
-.nyc_output/
-
-# TypeScript
-*.tsbuildinfo
-
-# Optional npm cache directory
-.npm/
