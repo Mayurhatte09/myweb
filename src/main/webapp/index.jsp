@@ -3,167 +3,199 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mr. Camel</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
 
     body {
-      margin: 0;
-      box-sizing: border-box;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+      min-height: 100vh;
     }
 
-    .container {
-      line-height: 150%;
-    }
-
-    .header {
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px;
-      background-color: #e9e9e9;
+      padding: 20px 50px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
     }
 
-    .header h1 {
-      color: #222222;
-      font-size: 30px;
-      font-family: 'Pacifico', cursive;
+    header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 28px;
+      color: #00fff7;
     }
 
-    .header .social a {
-      padding: 0 5px;
-      color: #222222;
-    }
-
-    .left {
-      float: left;
-      width: 180px;
-      margin: 0;
-      padding: 1em;
-    }
-
-    .content {
-      margin-left: 190px;
-      border-left: 1px solid #d4d4d4;
-      padding: 1em;
-      overflow: hidden;
-    }
-
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-    }
-
-    li a {
-      display: block;
-      color: #000;
-      padding: 8px 16px;
+    nav a {
+      color: #fff;
+      margin-left: 25px;
       text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
     }
 
-    li a.active {
-      background-color: #84e4e2;
-      color: white;
+    nav a:hover {
+      color: #00fff7;
     }
 
-    li a:hover:not(.active) {
-      background-color: #29292a;
-      color: red;
-    }
-
-    table {
-      font-family: arial, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-      margin: 30px 0;
-    }
-
-    td,
-    th {
-      border: 1px solid #dddddd;
-      padding: 8px;
-    }
-
-    tr:nth-child(1) {
-      background-color: #84e4e2;
-      color: white;
-    }
-
-    tr td i.fas {
-      display: block;
-      font-size: 35px;
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
+      padding: 150px 20px;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') no-repeat center/cover;
     }
 
-    .footer {
-      padding: 55px 20px;
-      background-color: #2e3550;
-      color: white;
+    .hero h2 {
+      font-size: 48px;
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #f1f1f1;
+      max-width: 600px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .section {
+      padding: 100px 50px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section h3 {
+      font-size: 36px;
+      margin-bottom: 40px;
       text-align: center;
+      color: #00fff7;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      width: 250px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .card h4 {
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .card p {
+      color: #ddd;
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav {
+        margin-top: 15px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <header class="header">
-      <h1>Final-Project Batch_019_021</h1>
-      <div class="social">
-        <a href="#"><i class="fab fa-facebook"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
+  <header>
+    <h1>Creative Portfolio</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Hi, I'm a Web Developer</h2>
+    <p>Building professional, modern, and responsive web applications that look amazing and perform smoothly across all devices.</p>
+  </section>
+
+  <section class="section" id="about">
+    <h3>About Me</h3>
+    <p style="text-align:center; max-width:700px; margin:auto;">Passionate about designing sleek web experiences and writing clean, maintainable code. I focus on both aesthetics and performance to create websites that users love.</p>
+  </section>
+
+  <section class="section" id="skills">
+    <h3>My Skills</h3>
+    <div class="cards">
+      <div class="card">
+        <h4>HTML & CSS</h4>
+        <p>Creating clean, semantic HTML and responsive layouts with modern CSS techniques.</p>
       </div>
-    </header>
-    <aside class="left">
-      <img src="./assets/html/mr-camel.jpg" width="160px" />
-      <ul>
-        <li><a class="active" href="#home">Home</a></li>
-        <li><a href="#career">Career</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#about">About</a></li>
-      </ul>
-      <br><br>
-      <p>"Do something important in life. I convert green grass to code."<br>- Mr Camel</p>
-    </aside>
-    <main class="content">
-      <h2>About Me</h2>
-      <p>I don't look like some handsome horse, but I am a real desert king. I can survive days without water.</p>
-      <h2>My Career</h2>
-      <p>I work as a web developer for a company that makes websites for camel businesses.</p>
-      <hr><br>
-      <h2>How Can I Help You?</h2>
-      <table>
-        <tr>
-          <th>SKILL 1</th>
-          <th>SKILL 2</th>
-          <th>SKILL 3</th>
-        </tr>
-        <tr>
-          <td><i class="fas fa-broom"></i></td>
-          <td><i class="fas fa-archive"></i></td>
-          <td><i class="fas fa-trailer"></i></td>
-        </tr>
-        <tr>
-          <td>Cleaning kaktus in your backyard</td>
-          <td>Storing some fat for you</td>
-          <td>Taking you through the desert</td>
-        </tr>
-        <tr>
-      </table>
-      <form>
-        <label>Email: <input type="text" name="email"></label><br>
-        <label> Mobile: <input type="text" name="mobile"> </label><br>
-        <textarea name="comments" rows="4">Enter your message</textarea><br>
-        <input type="submit" value="Submit" /><br>
-      </form>
-    </main>
-    <footer class="footer">&copy; Copyright Mr. Camel</footer>
-  </div>
+      <div class="card">
+        <h4>JavaScript</h4>
+        <p>Interactive and dynamic web experiences using vanilla JS or frameworks like React.</p>
+      </div>
+      <div class="card">
+        <h4>Backend</h4>
+        <p>Node.js & Express APIs, connecting front-end with databases efficiently.</p>
+      </div>
+      <div class="card">
+        <h4>DevOps & CI/CD</h4>
+        <p>Automated pipelines and deployment strategies for fast and reliable delivery.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <h3>Contact Me</h3>
+    <form style="max-width:500px; margin:auto; display:flex; flex-direction:column; gap:15px;">
+      <input type="text" placeholder="Name" required style="padding:10px; border-radius:8px; border:none;">
+      <input type="email" placeholder="Email" required style="padding:10px; border-radius:8px; border:none;">
+      <textarea placeholder="Message" rows="5" required style="padding:10px; border-radius:8px; border:none;"></textarea>
+      <button type="submit" style="padding:12px; border-radius:8px; border:none; background:#00fff7; color:#000; font-weight:bold; cursor:pointer; transition:0.3s;">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2026 | Modern Portfolio Design
+  </footer>
 </body>
 
 </html>
